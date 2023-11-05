@@ -1,9 +1,7 @@
-package com.ethnocopia;
+package com.ethnocopia.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 

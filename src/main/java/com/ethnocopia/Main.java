@@ -2,6 +2,9 @@ package com.ethnocopia;
 import java.util.List;
 import java.util.Optional;
 
+import com.ethnocopia.dao.CustomerRepository;
+import com.ethnocopia.dto.NewCustomerRequest;
+import com.ethnocopia.entity.Customer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -35,33 +38,32 @@ public class Main {
         return customerRepository.findAll();
     }
 
-    record NewCustomerRequest(String name, String email, int age) {}
 
     @PostMapping
     public void addCustomer(@RequestBody NewCustomerRequest request) {
         Customer customer = new Customer();
-        customer.setName(request.name);
-        customer.setEmail(request.email);
-        customer.setAge(request.age);
+        customer.setName(request.name());
+        customer.setEmail(request.email());
+        customer.setAge(request.age());
 
         customerRepository.save(customer);
     }
 
     @DeleteMapping("{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Integer id) {
+    public void deleteCustomer(@PathVariable("customerId") Long id) {
         customerRepository.deleteById(id);
     }
 
     @PutMapping("{customerId}")
-    public void updateCustomer(@PathVariable("customerId") Integer id, @RequestBody NewCustomerRequest request) {
+    public void updateCustomer(@PathVariable("customerId") Long id, @RequestBody NewCustomerRequest request) {
         Optional<Customer> customerWrapper = customerRepository.findById(id);
         if (!customerWrapper.isPresent())
             return;
 
         Customer customer = customerWrapper.get();
-        customer.setName(request.name);
-        customer.setAge(request.age);
-        customer.setEmail(request.email);
+        customer.setName(request.name());
+        customer.setAge(request.age());
+        customer.setEmail(request.email());
 
         customerRepository.save(customer);
     }
