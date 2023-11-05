@@ -1,41 +1,36 @@
 package com.ethnocopia;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
+
 @Entity
+@Data
 public class Customer {
     @Id
-    @SequenceGenerator(
-            name = "customer_id_seq",
-            sequenceName = "customer_id_seq",
-            allocationSize = 1
-    )
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "customer_id_seq"
+            strategy = GenerationType.IDENTITY
     )
-    private Integer id;
+    private Long id;
     private String name;
     private String email;
     private Integer age;
 
     public Customer() {}
 
-    public Customer(Integer id, String name, String email, Integer age) {
-        this.id = id;
+    public Customer( String name, String email, Integer age) {
         this.name = name;
         this.email = email;
         this.age = age;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
